@@ -1,0 +1,1 @@
+'use client'; import React from 'react'; export default function ProfilePage() { return (<div className='space-y-6'><div><h1 className='text-3xl font-bold'>Profile</h1><p className='text-gray-600'>Manage your account settings</p></div><div className='bg-white shadow rounded-lg p-6'><p>Profile page content coming soon...</p></div></div>); }

@@ -1,0 +1,56 @@
+{
+  "name": "admin-backend",
+  "version": "1.0.0",
+  "description": "E-commerce Admin Panel Backend",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node database/simple-migrator.js && npm run seed && nodemon server.js",
+    "test": "jest",
+    "migrate": "node database/migrator.js migrate",
+    "seed": "node database/seeder.js seed",
+    "setup": "npm run migrate && npm run seed",
+    "setup-mysql": "node setup-db.js && npm run migrate && npm run seed && npm run fix-db",
+    "fix-db": "node fix-db.js",
+    "test-mysql": "node test-mysql.js",
+    "setup-db": "node setup-database.js",
+    "fix-schema": "node fix-database-schema.js",
+    "fresh-start": "node start-with-db-setup.js",
+    "quick-start": "npm run fix-schema && npm start"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^2.2.0",
+    "compression": "^1.8.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^4.21.2",
+    "express-rate-limit": "^6.7.0",
+    "express-validator": "^7.0.1",
+    "helmet": "^6.2.0",
+    "jsonwebtoken": "^9.0.0",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.14.3",
+    "nodemailer": "^6.9.1",
+    "pdfkit": "^0.13.0",
+    "sequelize": "^6.37.7",
+    "socket.io": "^4.8.1",
+    "stripe": "^12.2.0",
+    "twilio": "^4.10.0",
+    "umzug": "^3.8.2",
+    "winston": "^3.17.0",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "jest": "^29.5.0",
+    "nodemon": "^3.1.10",
+    "sequelize-cli": "^6.6.3",
+    "supertest": "^6.3.3"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
