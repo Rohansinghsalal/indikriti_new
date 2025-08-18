@@ -1,12 +1,10 @@
 import { useState } from 'react';
 import { useCart } from '../context/CartContext.jsx';
-import { useAuth } from '../context/AuthContext.jsx';
 import { useAnalytics } from '../hooks/useAnalytics.js';
 import { useResponsive } from '../hooks/useResponsive.js';
 
 const ProductCard = ({ product, onProductClick, layout = 'grid' }) => {
   const { addToCart, addToWishlist, removeFromWishlist, isInWishlist } = useCart();
-  const { user } = useAuth();
   const { trackViewProduct } = useAnalytics();
   const { isMobileOrTablet } = useResponsive();
   
@@ -62,9 +60,9 @@ const ProductCard = ({ product, onProductClick, layout = 'grid' }) => {
         <div className="flex space-x-4">
           {/* Product Image */}
           <div className="w-24 h-24 bg-gray-200 rounded-lg flex-shrink-0 overflow-hidden relative">
-            {product.image ? (
-              <img 
-                src={product.image} 
+            {(product.image || product.image_url) ? (
+              <img
+                src={product.image || product.image_url}
                 alt={product.name}
                 className="w-full h-full object-cover"
                 onError={(e) => {
@@ -138,9 +136,9 @@ const ProductCard = ({ product, onProductClick, layout = 'grid' }) => {
       {/* Product Image */}
       <div className="relative">
         <div className={`${isMobileOrTablet ? 'h-40' : 'h-48'} bg-gray-200 flex items-center justify-center overflow-hidden relative`}>
-          {product.image ? (
-            <img 
-              src={product.image} 
+          {(product.image || product.image_url) ? (
+            <img
+              src={product.image || product.image_url}
               alt={product.name}
               className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
               onError={(e) => {

@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useAuth } from '../../context/AuthContext.jsx';
 import { redeemWalletAmount } from '../../services/enhancedApi.js';
 
 const WalletRedemption = ({ orderTotal, onWalletAmountChange, disabled = false }) => {
-  const { user, wallet, updateWalletBalance } = useAuth();
+  // Mock wallet data for demo purposes
+  const wallet = { balance: 500 };
   const [walletAmount, setWalletAmount] = useState(0);
   const [useWallet, setUseWallet] = useState(false);
   const [isRedeeming, setIsRedeeming] = useState(false);

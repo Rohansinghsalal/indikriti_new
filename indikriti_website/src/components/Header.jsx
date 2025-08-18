@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useCart } from '../context/CartContext.jsx';
 import { useResponsive } from '../hooks/useResponsive.js';
 import { searchProducts } from '../services/enhancedApi.js';
+import CategoryNavigation from './CategoryNavigation.jsx';
 
 const Header = ({ title = 'Indikriti', onSearch, onNavigate, showBack = false, onBack }) => {
   const { getCartItemsCount } = useCart();
@@ -194,35 +195,10 @@ const Header = ({ title = 'Indikriti', onSearch, onNavigate, showBack = false, o
           </div>
         )}
 
-        {/* Category quick access (only on home) */}
+        {/* Enhanced Category Navigation (only on home) */}
         {!showSearch && !showBack && title === 'Indikriti' && (
           <div className="pt-4">
-            <div className="flex space-x-3 overflow-x-auto scrollbar-hide pb-2">
-              <button
-                onClick={() => onNavigate?.('category', { id: 1, name: 'Handloom' })}
-                className="flex-shrink-0 bg-gradient-to-r from-blue-100 to-blue-200 text-blue-700 px-4 py-2 rounded-full text-sm font-medium hover:from-blue-200 hover:to-blue-300 transition-all transform hover:scale-105"
-              >
-                Handloom
-              </button>
-              <button
-                onClick={() => onNavigate?.('category', { id: 2, name: 'Handicraft' })}
-                className="flex-shrink-0 bg-gradient-to-r from-purple-100 to-purple-200 text-purple-700 px-4 py-2 rounded-full text-sm font-medium hover:from-purple-200 hover:to-purple-300 transition-all transform hover:scale-105"
-              >
-                🎨 Handicraft
-              </button>
-              <button
-                onClick={() => onNavigate?.('category', { id: 3, name: 'Corporate Gifts' })}
-                className="flex-shrink-0 bg-gradient-to-r from-green-100 to-green-200 text-green-700 px-4 py-2 rounded-full text-sm font-medium hover:from-green-200 hover:to-green-300 transition-all transform hover:scale-105"
-              >
-                🎁 Corporate
-              </button>
-              <button
-                onClick={() => onNavigate?.('sales')}
-                className="flex-shrink-0 bg-gradient-to-r from-red-100 to-red-200 text-red-700 px-4 py-2 rounded-full text-sm font-medium hover:from-red-200 hover:to-red-300 transition-all transform hover:scale-105"
-              >
-                🔥 Sale
-              </button>
-            </div>
+            <CategoryNavigation onNavigate={onNavigate} />
           </div>
         )}
       </div>

@@ -17,8 +17,8 @@ const getApiBaseUrl = () => {
     return import.meta.env.VITE_API_URL || null;
   }
 
-  // In local development, try localhost:5000 (your backend port)
-  return 'http://localhost:5000/api/v1';
+  // In local development, try localhost:5001 (your backend port)
+  return 'http://localhost:5001/api/v1';
 };
 
 const API_BASE_URL = getApiBaseUrl();
@@ -276,10 +276,10 @@ export const fetchCategories = async (brand = 'indikriti') => {
             id: category.id,
             name: category.name,
             icon: getCategoryIcon(category.name),
-            subcategories: category.subcategories ? category.subcategories.map(sub => ({
+            subcategories: category.indikriti_subcategories ? category.indikriti_subcategories.map(sub => ({
               id: sub.id,
               name: sub.name,
-              types: sub.productTypes ? sub.productTypes.map(type => ({
+              types: sub.indikriti_productTypes ? sub.indikriti_productTypes.map(type => ({
                 id: type.id,
                 name: type.name
               })) : []
@@ -317,26 +317,24 @@ export const fetchProductsByCategory = async (categoryId, brand = 'indikriti') =
   // If no API URL configured, use mock data immediately
   if (USE_MOCK_DATA) {
     console.log('📂 Filtering mock products by category:', categoryId);
-    return mockProducts.filter(product => 
-      product.indikriti_category_id === parseInt(categoryId) ||
-      product.winsomelane_category_id === parseInt(categoryId)
+    return mockProducts.filter(product =>
+      product.indikriti_category_id === parseInt(categoryId)
     );
   }
 
   try {
-    // Use the brand-specific filtering
+    // Use Indikriti brand filtering only
     const filters = {
-      brand: brand,
-      [`${brand === 'indikriti' ? 'indikriti' : 'winsomelane'}_category_id`]: categoryId
+      brand: 'indikriti',
+      indikriti_category_id: categoryId
     };
-    
+
     const products = await fetchProducts(filters);
     return products;
   } catch (error) {
     console.log('📂 Backend not available, filtering mock data');
-    return mockProducts.filter(product => 
-      product.indikriti_category_id === parseInt(categoryId) ||
-      product.winsomelane_category_id === parseInt(categoryId)
+    return mockProducts.filter(product =>
+      product.indikriti_category_id === parseInt(categoryId)
     );
   }
 };
@@ -345,25 +343,23 @@ export const fetchProductsBySubcategory = async (subcategoryId, brand = 'indikri
   // If no API URL configured, use mock data immediately
   if (USE_MOCK_DATA) {
     console.log('📂 Filtering mock products by subcategory:', subcategoryId);
-    return mockProducts.filter(product => 
-      product.indikriti_subcategory_id === parseInt(subcategoryId) ||
-      product.winsomelane_subcategory_id === parseInt(subcategoryId)
+    return mockProducts.filter(product =>
+      product.indikriti_subcategory_id === parseInt(subcategoryId)
     );
   }
 
   try {
     const filters = {
-      brand: brand,
-      [`${brand === 'indikriti' ? 'indikriti' : 'winsomelane'}_subcategory_id`]: subcategoryId
+      brand: 'indikriti',
+      indikriti_subcategory_id: subcategoryId
     };
-    
+
     const products = await fetchProducts(filters);
     return products;
   } catch (error) {
     console.log('📂 Backend not available, filtering mock data');
-    return mockProducts.filter(product => 
-      product.indikriti_subcategory_id === parseInt(subcategoryId) ||
-      product.winsomelane_subcategory_id === parseInt(subcategoryId)
+    return mockProducts.filter(product =>
+      product.indikriti_subcategory_id === parseInt(subcategoryId)
     );
   }
 };
@@ -400,36 +396,12 @@ export const searchProducts = async (query) => {
   }
 };
 
-// Brand-specific API calls
+// Brand-specific API calls - Indikriti only
 export const fetchBrands = async () => {
-  if (USE_MOCK_DATA) {
-    return [
-      { id: 'indikriti', name: 'Indikriti' },
-      { id: 'winsomeLane', name: 'Winsome Lane' }
-    ];
-  }
-
-  try {
-    const result = await makeApiRequest(`${API_BASE_URL}/products/brands`);
-    
-    if (result.success) {
-      const data = result.data;
-      if (data.success && data.data) {
-        return data.data;
-      }
-      if (Array.isArray(data)) {
-        return data;
-      }
-    }
-    
-    throw new Error('Brands endpoint not working');
-  } catch (error) {
-    console.log('🏷️ Backend not available, using default brands');
-    return [
-      { id: 'indikriti', name: 'Indikriti' },
-      { id: 'winsomeLane', name: 'Winsome Lane' }
-    ];
-  }
+  // Always return only Indikriti brand
+  return [
+    { id: 'indikriti', name: 'Indikriti' }
+  ];
 };
 
 // Articles and reviews (always use mock for now)
@@ -578,9 +550,8 @@ const generateProductImage = (product) => {
   };
 
   // Try to determine category from product data
-  const categoryId = product.indikriti_category_id || 
-                   product.winsomelane_category_id || 
-                   product.category_id || 
+  const categoryId = product.indikriti_category_id ||
+                   product.category_id ||
                    product.product_type_id || 1;
   
   const categoryImages = imageMap[categoryId] || imageMap[1];

@@ -180,7 +180,15 @@ exports.getCompleteHierarchyByBrand = async (req, res) => {
         ]
       });
     }
-    
+
+    // Set cache control headers to prevent 304 responses during development
+    res.set({
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Pragma': 'no-cache',
+      'Expires': '0',
+      'ETag': `"hierarchy-${brand}-${Date.now()}"` // Dynamic ETag to force fresh responses
+    });
+
     res.json({
       success: true,
       data: hierarchy,

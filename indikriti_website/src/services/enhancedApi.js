@@ -13,7 +13,7 @@ const getApiBaseUrl = () => {
   if (import.meta.env.PROD || isCloudEnvironment()) {
     return import.meta.env.VITE_API_URL || null;
   }
-  return 'http://localhost:5000/api/v1';
+  return 'http://localhost:5001/api/v1';
 };
 
 const API_BASE_URL = getApiBaseUrl();
@@ -28,17 +28,8 @@ console.log('🔗 Enhanced API Configuration:', {
   useMockData: USE_MOCK_DATA
 });
 
-// Enhanced auth headers with better token management
-const getAuthHeaders = async () => {
-  const userToken = localStorage.getItem('token');
-  
-  if (userToken) {
-    return {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${userToken}`
-    };
-  }
-  
+// Standard headers - no authentication required
+const getHeaders = () => {
   return {
     'Content-Type': 'application/json'
   };
@@ -47,8 +38,8 @@ const getAuthHeaders = async () => {
 // Enhanced API request function
 const makeApiRequest = async (url, options = {}) => {
   console.log(`🔍 Making API request to: ${url}`);
-  
-  const headers = await getAuthHeaders();
+
+  const headers = getHeaders();
   const config = {
     method: 'GET',
     headers,
@@ -75,16 +66,45 @@ const makeApiRequest = async (url, options = {}) => {
   }
 };
 
+// Fetch products by product type ID
+export const fetchProductsByProductType = async (productTypeId, options = {}) => {
+  const { page = 1, limit = 20 } = options;
+
+  if (USE_MOCK_DATA) {
+    console.log(`📦 Using mock products for product type ${productTypeId}`);
+    // This will be handled by the backend endpoint
+    try {
+      const result = await makeApiRequest(`${API_BASE_URL}/products/by-product-type/${productTypeId}?page=${page}&limit=${limit}`);
+      if (result.success) {
+        return result.data;
+      }
+      throw new Error('Product type API not available');
+    } catch (error) {
+      console.log('📦 Backend not available, using empty array for product type');
+      return [];
+    }
+  }
+
+  try {
+    const result = await makeApiRequest(`${API_BASE_URL}/products/by-product-type/${productTypeId}?page=${page}&limit=${limit}`);
+    if (result.success) {
+      return result.data;
+    }
+    throw new Error('Product type API not available');
+  } catch (error) {
+    console.log('📦 Backend not available, using empty array for product type');
+    return [];
+  }
+};
+
 // Enhanced Products API
 export const fetchProducts = async (filters = {}) => {
   if (USE_MOCK_DATA) {
-    console.log('📦 Using mock products');
+    console.log('📦 Using mock products - Indikriti only');
     let filteredProducts = [...mockProducts];
-    
-    // Apply filters
-    if (filters.brand) {
-      filteredProducts = filteredProducts.filter(p => p.brand === filters.brand);
-    }
+
+    // Filter for Indikriti products only
+    filteredProducts = filteredProducts.filter(p => p.brand === 'indikriti');
     if (filters.category_id) {
       filteredProducts = filteredProducts.filter(p => 
         p.indikriti_category_id === parseInt(filters.category_id)
@@ -123,15 +143,17 @@ export const fetchProducts = async (filters = {}) => {
     throw new Error('Backend not available');
   } catch (error) {
     console.log('📦 Backend not available, using mock products:', error.message);
-    return mockProducts;
+    return mockProducts.filter(p => p.brand === 'indikriti');
   }
 };
 
 // Sales and Discounts API
 export const fetchSalesAndDiscounts = async () => {
   if (USE_MOCK_DATA) {
-    console.log('🏷️ Using mock sales data');
-    const saleProducts = mockProducts.filter(p => p.discounted_price < p.price);
+    console.log('🏷️ Using mock sales data - Indikriti only');
+    const saleProducts = mockProducts.filter(p =>
+      p.brand === 'indikriti' && p.discounted_price < p.price
+    );
     return {
       flashSales: saleProducts.slice(0, 6),
       discountedProducts: saleProducts,

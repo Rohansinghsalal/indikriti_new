@@ -5,6 +5,7 @@ import Home from '../pages/Home.jsx';
 import Cart from '../pages/Cart.jsx';
 import ProductDetail from '../pages/ProductDetail.jsx';
 import CategoryPage from '../pages/CategoryPage.jsx';
+import ProductType from '../pages/ProductType.jsx';
 import SearchPage from '../pages/SearchPage.jsx';
 
 const AppRouter = () => {
@@ -84,6 +85,9 @@ const AppRouter = () => {
 
       case 'category':
         return <CategoryPage onNavigate={navigate} routeParams={routeParams} />;
+
+      case 'product-type':
+        return <ProductType onNavigate={navigate} routeParams={routeParams} />;
 
       case 'search':
         return <SearchPage onNavigate={navigate} routeParams={routeParams} />;

@@ -1,21 +1,9 @@
-import { useState } from 'react';
-import { useAuth } from '../context/AuthContext.jsx';
 import Header from './Header.jsx';
 import Navbar from './Navbar.jsx';
-import AuthFlow from './auth/AuthFlow.jsx';
 
 const Layout = ({ children, currentPage = 'home', title, showBack = false, onBack }) => {
-  const { isAuthenticated, needsPhone } = useAuth();
-  const [showAuthFlow, setShowAuthFlow] = useState(false);
-
   const handleNavigation = (page, data) => {
     console.log('Navigate to:', page, data);
-    
-    // Handle authentication requirement
-    if (!isAuthenticated && ['cart', 'wishlist', 'profile', 'checkout'].includes(page)) {
-      setShowAuthFlow(true);
-      return;
-    }
     
     // Handle different navigation scenarios
     switch (page) {
@@ -35,7 +23,8 @@ const Layout = ({ children, currentPage = 'home', title, showBack = false, onBac
         window.location.hash = 'profile';
         break;
       case 'login':
-        setShowAuthFlow(true);
+        // No login required - redirect to home
+        window.location.hash = 'home';
         break;
       case 'category':
         if (data) {
@@ -63,13 +52,7 @@ const Layout = ({ children, currentPage = 'home', title, showBack = false, onBac
     window.location.hash = `search?q=${encodeURIComponent(query)}`;
   };
 
-  const handleAuthComplete = () => {
-    setShowAuthFlow(false);
-  };
 
-  const handleCloseAuth = () => {
-    setShowAuthFlow(false);
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-indigo-50/20">
@@ -93,13 +76,7 @@ const Layout = ({ children, currentPage = 'home', title, showBack = false, onBac
         onNavigate={handleNavigation}
       />
 
-      {/* Authentication Flow */}
-      {(showAuthFlow || needsPhone) && (
-        <AuthFlow
-          onComplete={handleAuthComplete}
-          onClose={handleCloseAuth}
-        />
-      )}
+
     </div>
   );
 };

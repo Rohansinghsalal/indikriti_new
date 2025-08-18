@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useCart } from '../context/CartContext.jsx';
-import { useAuth } from '../context/AuthContext.jsx';
 import { useResponsive } from '../hooks/useResponsive.js';
 import Layout from '../components/Layout.jsx';
 import WalletRedemption from '../components/checkout/WalletRedemption.jsx';
@@ -14,7 +13,6 @@ const Cart = ({ onNavigate }) => {
     moveToWishlist,
     clearCart 
   } = useCart();
-  const { user } = useAuth();
   const { isMobileOrTablet } = useResponsive();
   
   const [walletAmount, setWalletAmount] = useState(0);
@@ -226,13 +224,11 @@ const Cart = ({ onNavigate }) => {
                 </button>
               </div>
 
-              {/* Wallet Redemption */}
-              {user && (
-                <WalletRedemption
-                  orderTotal={cartTotal}
-                  onWalletAmountChange={setWalletAmount}
-                />
-              )}
+              {/* Wallet Redemption - Available for all users */}
+              <WalletRedemption
+                orderTotal={cartTotal}
+                onWalletAmountChange={setWalletAmount}
+              />
 
               {/* Continue Shopping */}
               <button
