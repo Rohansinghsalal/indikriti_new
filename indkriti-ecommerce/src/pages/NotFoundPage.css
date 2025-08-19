@@ -1,0 +1,63 @@
+.not-found-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.not-found-content {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.not-found-page h1 {
+  font-size: 8rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: 0;
+  line-height: 1;
+  opacity: 0.8;
+}
+
+.not-found-page h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: var(--color-text-primary);
+}
+
+.not-found-page p {
+  font-size: 1.125rem;
+  margin-bottom: 2rem;
+  color: var(--color-text-secondary);
+}
+
+.not-found-page .btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.not-found-page .btn-primary {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.not-found-page .btn-primary:hover {
+  background-color: var(--color-primary-dark);
+  transform: translateY(-2px);
+}
+
+/* Dark mode adjustments */
+[data-theme='dark'] .not-found-page h2 {
+  color: var(--color-text-primary-dark);
+}
+
+[data-theme='dark'] .not-found-page p {
+  color: var(--color-text-secondary-dark);
+}

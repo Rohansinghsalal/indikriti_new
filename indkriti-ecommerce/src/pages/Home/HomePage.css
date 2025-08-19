@@ -1,0 +1,82 @@
+/* HomePage.css */
+.home-page {
+  padding-bottom: 2rem;
+}
+
+/* Hero Section */
+.hero-section {
+  padding: 2rem 0;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .hero-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .hero-grid > div:first-child {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+}
+
+.hero-card {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.hero-card:hover {
+  transform: translateY(-5px);
+}
+
+.hero-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.hero-card:hover img {
+  transform: scale(1.05);
+}
+
+.card-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.5rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
+  color: white;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+/* Animation */
+.fade-in {
+  animation: fadeIn 0.8s ease-in-out forwards;
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-grid > div:nth-child(1) { animation-delay: 0.1s; }
+.hero-grid > div:nth-child(2) { animation-delay: 0.2s; }
+.hero-grid > div:nth-child(3) { animation-delay: 0.3s; }
+.hero-grid > div:nth-child(4) { animation-delay: 0.4s; }
+.hero-grid > div:nth-child(5) { animation-delay: 0.5s; }

@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indikriti - Home Decor & Living</title>
+    <style>
+        /* ==========  YOUR EXISTING CSS  ========== */
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:Arial,sans-serif;line-height:1.6;color:#333;display:flex;flex-direction:column;min-height:100vh}
+        .main-content{flex:1}
+        .container{max-width:1400px;margin:0 auto;padding:0 20px}
+        .top-banner{background:#F7C52D;padding:10px 0;text-align:center;font-size:14px;font-weight:500}
+        .header{background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.1);position:sticky;top:0;z-index:1000}
+        .nav-container{display:flex;justify-content:space-between;align-items:center;padding:15px 20px}
+        .logo{font-size:24px;font-weight:bold;color:#333;text-decoration:none}
+        .nav-menu{display:flex;list-style:none;gap:30px}
+        .nav-menu a{text-decoration:none;color:#333;font-weight:500;transition:color .3s}
+        .nav-menu a:hover{color:#F7C52D}
+        .nav-icons{display:flex;gap:15px;align-items:center;font-size:24px;cursor:pointer}
+        .hero-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:20px;padding:40px 0}
+        .hero-card{position:relative;border-radius:12px;overflow:hidden;box-shadow:0 8px 25px rgba(0,0,0,.1);cursor:pointer;transition:transform .3s}
+        .hero-card:hover{transform:translateY(-5px)}
+        .hero-card img{width:100%;height:300px;object-fit:cover}
+        .card-overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff;padding:20px}
+        .card-title{font-size:18px;font-weight:600}
+        .simplicity-section{background:linear-gradient(135deg,#f5f5f5 0%,#e8e8e8 100%);padding:80px 0}
+        .simplicity-content{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+        .simplicity-text{padding-left:40px}
+        .simplicity-title{font-size:48px;font-weight:bold;margin-bottom:20px}
+        .simplicity-subtitle{font-size:20px;color:#666;margin-bottom:30px}
+        .simplicity-image img{width:100%;border-radius:15px;box-shadow:0 15px 35px rgba(0,0,0,.1)}
+        .products-section{padding:80px 0}
+        .section-header{text-align:center;margin-bottom:60px}
+        .section-title{font-size:42px;font-weight:bold;margin-bottom:15px}
+        .section-subtitle{font-size:18px;color:#666;max-width:600px;margin:0 auto}
+        .products-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px;margin-bottom:40px}
+        .product-card{background:#fff;border-radius:15px;overflow:hidden;box-shadow:0 8px 25px rgba(0,0,0,.08);transition:all .3s}
+        .product-card:hover{transform:translateY(-8px);box-shadow:0 15px 40px rgba(0,0,0,.15)}
+        .product-image{position:relative;overflow:hidden}
+        .product-image img{width:100%;height:250px;object-fit:cover;transition:transform .3s}
+        .product-card:hover .product-image img{transform:scale(1.05)}
+        .sale-badge{position:absolute;top:15px;left:15px;background:#F7C52D;color:#333;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:600}
+        .product-info{padding:25px}
+        .product-title{font-size:16px;font-weight:600;margin-bottom:10px;line-height:1.4}
+        .product-price{display:flex;align-items:center;gap:10px;margin-bottom:20px}
+        .current-price{font-size:18px;font-weight:bold}
+        .original-price{font-size:14px;color:#999;text-decoration:line-through}
+        .btn{width:100%;padding:12px 20px;border:2px solid #333;background:transparent;font-weight:600;border-radius:8px;cursor:pointer;transition:all .3s}
+        .btn:hover{background:#333;color:#fff}
+        .btn-primary{background:#F7C52D;border-color:#F7C52D;color:#333}
+        .btn-primary:hover{background:#e6b429;border-color:#e6b429}
+        .trust-section{background:#F7C52D;padding:80px 0;text-align:center}
+        .trust-title{font-size:36px;font-weight:bold;margin-bottom:40px}
+        .trust-subtitle{font-size:18px;margin-bottom:40px}
+        .trust-features{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:30px;margin-bottom:40px}
+        .trust-feature{background:rgba(255,255,255,.1);padding:20px;border-radius:10px;backdrop-filter:blur(10px)}
+        .trust-feature h4{font-size:16px}
+        .guarantee-text{font-size:20px;font-weight:600}
+        .explore-section{background:#F7C52D;padding:60px 0;text-align:center}
+        .explore-title{font-size:32px;font-weight:bold;margin-bottom:20px}
+        .explore-subtitle{font-size:18px;margin-bottom:30px}
+        .btn-outline{background:transparent;color:#333;border:2px solid #333;padding:15px 40px;font-size:16px;font-weight:600;border-radius:8px;cursor:pointer;transition:all .3s}
+        .btn-outline:hover{background:#333;color:#fff}
+        .faq-section{padding:80px 0;background:#f9f9f9}
+        .faq-title{text-align:center;font-size:42px;font-weight:bold;margin-bottom:60px}
+        .faq-list{max-width:800px;margin:0 auto}
+        .faq-item{background:#fff;margin-bottom:20px;border-radius:10px;overflow:hidden;box-shadow:0 4px 15px rgba(0,0,0,.05)}
+        .faq-question{padding:25px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:18px;font-weight:600}
+        .faq-question:hover{background:#f5f5f5}
+        .faq-icon{transition:transform .3s}
+        .faq-answer{max-height:0;overflow:hidden;transition:max-height .3s;padding:0 25px;background:#f9f9f9}
+        .faq-item.active .faq-answer{max-height:300px;padding:0 25px 25px}
+        .faq-item.active .faq-icon{transform:rotate(180deg)}
+        .footer{background:#333;color:#fff;padding:60px 0 20px}
+        .footer-content{display:grid;grid-template-columns:1fr 1fr 1fr;gap:60px;margin-bottom:40px}
+        .footer-section h3{font-size:20px;font-weight:bold;margin-bottom:25px;color:#F7C52D}
+        .footer-section ul{list-style:none}
+        .footer-section ul li{margin-bottom:15px}
+        .footer-section ul li a{color:#ddd;text-decoration:none;transition:color .3s}
+        .footer-section ul li a:hover{color:#F7C52D}
+        .footer-bottom{text-align:center;padding-top:30px;border-top:1px solid rgba(255,255,255,.1);color:#aaa;font-size:14px}
+        .social-icons{display:flex;gap:20px;justify-content:center;margin-bottom:20px}
+        .social-icon{width:40px;height:40px;background:#F7C52D;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#333;text-decoration:none;transition:all .3s}
+        .social-icon:hover{background:#fff;transform:translateY(-3px)}
+        .chat-widget{position:fixed;bottom:20px;right:20px;background:#333;color:#fff;padding:15px 20px;border-radius:25px;cursor:pointer;font-weight:600;box-shadow:0 4px 15px rgba(0,0,0,.2);z-index:1000;display:flex;align-items:center;gap:10px;transition:all .3s}
+        .chat-widget:hover{background:#222;transform:translateY(-3px)}
+        .chat-badge{position:absolute;top:-5px;right:-5px;background:#F7C52D;color:#333;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold}
+        .hamburger{display:none;flex-direction:column;cursor:pointer;gap:4px}
+        .hamburger span{width:25px;height:3px;background:#333}
+        @media(max-width:1024px){.hero-grid{grid-template-columns:repeat(3,1fr)}.footer-content{grid-template-columns:1fr 1fr}}
+        @media(max-width:768px){
+            .hero-grid{grid-template-columns:repeat(2,1fr)}
+            .hamburger{display:flex}
+            .nav-menu{position:absolute;top:60px;left:0;right:0;background:#fff;flex-direction:column;gap:0;display:none}
+            .nav-menu li{border-bottom:1px solid #eee}
+            .nav-menu li a{display:block;padding:15px 20px}
+            .simplicity-content{grid-template-columns:1fr;text-align:center;gap:30px}
+            .simplicity-text{padding-left:0}
+            .products-grid{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+            .footer-content{grid-template-columns:1fr;gap:30px}
+            .section-title,.faq-title{font-size:32px}
+        }
+        @media(max-width:480px){.hero-grid{grid-template-columns:1fr}.trust-features{grid-template-columns:1fr}.simplicity-title{font-size:36px}}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+        .fade-in{animation:fadeIn .6s ease forwards}
+    </style>
+</head>
+<body>
+
+<!-- =======  TOP BANNER  ======= -->
+<div class="top-banner">
+    FOR CUSTOMISED FITTED BEDSHEETS CONTACT 8700825418
+</div>
+
+<!-- =======  HEADER  ======= -->
+<header class="header">
+    <div class="nav-container">
+        <a href="#" class="logo">Indikriti</a>
+
+        <!-- Hamburger for mobile -->
+        <div class="hamburger" id="hamburger">
+            <span></span><span></span><span></span>
+        </div>
+
+        <nav>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Home Linen ▼</a></li>
+                <li><a href="#">Home Décor ▼</a></li>
+                <li><a href="#">Tableware ▼</a></li>
+                <li><a href="#">Kitchenware ▼</a></li>
+                <li><a href="#">Gifting</a></li>
+                <li><a href="#">Handicraft</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+
+        <div class="nav-icons">
+            <span>🔍</span>
+            <span>👤</span>
+            <span>🛒</span>
+        </div>
+    </div>
+</header>
+
+<!-- =======  HERO  ======= -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-grid">
+            <div class="hero-card fade-in">
+                <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop" alt="Bedsheets">
+                <div class="card-overlay">
+                    <div class="card-title">Bedsheets →</div>
+                </div>
+            </div>
+            <div class="hero-card fade-in">
+                <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop" alt="Spring Shades">
+                <div class="card-overlay">
+                    <div class="card-title">Spring Shades →</div>
+                </div>
+            </div>
+            <div class="hero-card fade-in">
+                <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=300&fit=crop" alt="New Arrivals">
+                <div class="card-overlay">
+                    <div class="card-title">New Arrivals →</div>
+                </div>
+            </div>
+            <div class="hero-card fade-in">
+                <img src="https://images.unsplash.com/photo-1586773860418-d37222d8fce3?w=400&h=300&fit=crop" alt="Home Decor">
+                <div class="card-overlay">
+                    <div class="card-title">Home Decor →</div>
+                </div>
+            </div>
+            <div class="hero-card fade-in">
+                <img src="https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=400&h=300&fit=crop" alt="Planters">
+                <div class="card-overlay">
+                    <div class="card-title">Planters →</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =======  SIMPLICITY  ======= -->
+<section class="simplicity-section">
+    <div class="container">
+        <div class="simplicity-content fade-in">
+            <div class="simplicity-text">
+                <h2 class="simplicity-title">सादगी | Simplicity</h2>
+                <p class="simplicity-subtitle">Pure Cotton, Simple Elegance, Soothing Comfort!</p>
+            </div>
+            <div class="simplicity-image">
+                <img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600&h=400&fit=crop" alt="Bedsheet">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =======  PRODUCTS  ======= -->
+<section class="products-section">
+    <div class="container">
+        <div class="section-header fade-in">
+            <h2 class="section-title">#Cozy Quilts and Dohars</h2>
+            <p class="section-subtitle">Get ready for the sweater weather with 100% pure cotton Mul Mul Quilts and Dohars</p>
+        </div>
+
+        <div class="products-grid">
+            <!-- Product 1 -->
+            <div class="product-card fade-in">
+                <div class="product-image">
+                    <div class="sale-badge">Sale</div>
+                    <img src="https://images.unsplash.com/photo-1540932239986-30128078f3c5?w=400&h=300&fit=crop" alt="Penguin Pink Dohar">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Hand Block Print Mul Dohar - Penguin Pink</h3>
+                    <div class="product-price">
+                        <span class="current-price">From Rs. 1,495.00</span>
+                    </div>
+                    <button class="btn btn-primary">Add to cart</button>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product-card fade-in">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop" alt="Penguin Blue Dohar">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Hand Block Print Mul Dohar - Penguin Blue</h3>
+                    <div class="product-price">
+                        <span class="current-price">From Rs. 1,800.00</span>
+                        <span class="original-price">Rs. 3,000.00</span>
+                    </div>
+                    <button class="btn">Choose options</button>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product-card fade-in">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop" alt="Abstract Orange Dohar">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Double Bed Reversible Mul Dohar - Abstract Orange</h3>
+                    <div class="product-price">
+                        <span class="current-price">Rs. 2,495.00</span>
+                    </div>
+                    <button class="btn btn-primary">Add to cart</button>
+                </div>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="product-card fade-in">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=400&h=300&fit=crop" alt="Phool Plate Dohar">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Double Bed Reversible Mul Dohar - Phool Plate</h3>
+                    <div class="product-price">
+                        <span class="current-price">Rs. 2,495.00</span>
+                    </div>
+                    <button class="btn btn-primary">Add to cart</button>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align:center;margin-top:40px">
+            <button class="btn-primary" style="padding:15px 40px;border:none;border-radius:8px;font-size:16px;font-weight:600">View all</button>
+        </div>
+    </div>
+</section>
+
+<!-- =======  TRUST  ======= -->
+<section class="trust-section">
+    <div class="container">
+        <h2 class="trust-title fade-in">What should you expect by choosing us?</h2>
+        <p class="trust-subtitle fade-in">Along with the guaranteed best quality products:</p>
+        <div class="trust-features">
+            <div class="trust-feature fade-in"><h4>• A promise of solution-oriented customer support.</h4></div>
+            <div class="trust-feature fade-in"><h4>• Regular tracking updates on e-mail & SMS</h4></div>
+            <div class="trust-feature fade-in"><h4>• Safe & secure packaging</h4></div>
+            <div class="trust-feature fade-in"><h4>• 100% Secured payment by #Razorpay trusted business</h4></div>
+            <div class="trust-feature fade-in"><h4>• Direct support to artisans of India</h4></div>
+        </div>
+        <p class="guarantee-text fade-in">Join our voyage today, we guarantee you'll come back for more :)</p>
+    </div>
+</section>
+
+<!-- =======  EXPLORE  ======= -->
+<section class="explore-section">
+    <div class="container">
+        <h2 class="explore-title fade-in">Craving more to explore?</h2>
+        <p class="explore-subtitle fade-in">Checkout the entire store here :</p>
+        <button class="btn-outline fade-in">SHOW ME</button>
+    </div>
+</section>
+
+<!-- =======  FAQ  ======= -->
+<section class="faq-section">
+    <div class="container">
+        <h2 class="faq-title fade-in">FAQs</h2>
+        <div class="faq-list">
+            <div class="faq-item fade-in">
+                <div class="faq-question">✈️ When will I receive my order?<span class="faq-icon">▼</span></div>
+                <div class="faq-answer"><p>Orders are typically processed within 1-2 business days. Delivery times vary by location but usually take 3-7 business days within India.</p></div>
+            </div>
+            <div class="faq-item fade-in">
+                <div class="faq-question">🏷️ What are the shipping charges?<span class="faq-icon">▼</span></div>
+                <div class="faq-answer"><p>We offer free shipping on all orders over ₹2000. For orders below ₹2000, a flat shipping fee of ₹100 applies.</p></div>
+            </div>
+            <div class="faq-item fade-in">
+                <div class="faq-question">❓ What if I receive a damaged product?<span class="faq-icon">▼</span></div>
+                <div class="faq-answer"><p>We take great care in packaging, but if you receive a damaged item, please contact us within 48 hours with photos of the product and packaging for a replacement or refund.</p></div>
+            </div>
+            <div class="faq-item fade-in">
+                <div class="faq-question">💝 Do you have gift packaging options?<span class="faq-icon">▼</span></div>
+                <div class="faq-answer"><p>Yes! We offer beautiful gift wrapping and personalized messages at no additional cost. Just select the gift option at checkout.</p></div>
+            </div>
+            <div class="faq-item fade-in">
+                <div class="faq-question">💬 Whom can I contact for any other question?<span class="faq-icon">▼</span></div>
+                <div class="faq-answer"><p>Our customer support team is available 10AM-7PM daily at support@localkala.com or +91 8700825418. We typically respond within 2 hours during business hours.</p></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =======  FOOTER  ======= -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="logo" style="font-size:20px;margin-bottom:20px;color:#F7C52D">Indikriti</div>
+                <p style="color:#ddd;font-size:14px;line-height:1.6">
+                    PRAKASH BANSAL<br>
+                    GROUND FLOOR, SHOP NO. 1546/18, TRI NAGAR,<br>
+                    BEHIND HANUMAN MANDIR, NEAR PURLA-A, New Delhi,<br>
+                    North West Delhi, Delhi, 110035
+                </p>
+            </div>
+            <div class="footer-section">
+                <h3>POLICIES</h3>
+                <ul>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Refunds & Returns Policy</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Shipping & Delivery Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>QUICK LINKS</h3>
+                <ul>
+                    <li><a href="#">About us</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Discounts and Offers</a></li>
+                    <li><a href="#">Visit our Studio</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="social-icons">
+            <a href="#" class="social-icon">f</a>
+            <a href="#" class="social-icon">📷</a>
+            <a href="#" class="social-icon">💬</a>
+            <a href="#" class="social-icon">▶️</a>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2025, Indikriti • Refund policy • Privacy policy • Terms of service • Shipping policy • Contact information</p>
+        </div>
+    </div>
+</footer>
+
+<!-- =======  CHAT WIDGET  ======= -->
+<div class="chat-widget">
+    💬 Need help?
+    <div class="chat-badge">1</div>
+</div>
+
+<!-- =======  SCRIPT  ======= -->
+<script>
+/* --- FAQ toggle --- */
+document.querySelectorAll('.faq-question').forEach(q=>{
+    q.addEventListener('click',()=>q.parentElement.classList.toggle('active'));
+});
+
+/* --- mobile menu toggle --- */
+const hamburger = document.getElementById('hamburger');
+const navMenu   = document.getElementById('nav-menu');
+hamburger.addEventListener('click',()=>{
+    navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
+});
+
+/* --- smooth scroll for anchor links --- */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click',e=>{
+        e.preventDefault();
+        const tgt=document.querySelector(a.getAttribute('href'));
+        tgt?.scrollIntoView({behavior:'smooth'});
+    });
+});
+
+/* --- add-to-cart flash --- */
+document.querySelectorAll('.btn-primary').forEach(btn=>{
+    btn.addEventListener('click',function(){
+        const orig=this.textContent;
+        this.textContent='Added! ✓';
+        this.style.background='#4CAF50';
+        setTimeout(()=>{
+            this.textContent=orig;
+            this.style.background='#F7C52D';
+        },2000);
+    });
+});
+
+/* --- navbar glass scroll --- */
+window.addEventListener('scroll',()=>{
+    const h=document.querySelector('.header');
+    h.style.background=window.scrollY>100?'rgba(255,255,255,.95)':'#fff';
+});
+</script>
+
+</body>
+</html>

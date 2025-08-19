@@ -1,0 +1,101 @@
+.dark-mode-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  width: 48px;
+  height: 24px;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.toggle-track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: #f0f0f0;
+  border-radius: 12px;
+  transition: background-color 0.3s ease;
+}
+
+.dark-mode-toggle.dark .toggle-track {
+  background-color: #333;
+}
+
+.toggle-indicator {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dark-mode-toggle.dark .toggle-indicator {
+  transform: translateX(24px);
+  background-color: #121212;
+}
+
+.toggle-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 16px;
+  width: 16px;
+  color: #f39c12;
+  transition: color 0.3s ease;
+}
+
+.dark-mode-toggle.dark .toggle-icon {
+  color: #f1c40f;
+}
+
+/* Hover effects */
+.dark-mode-toggle:hover .toggle-track {
+  background-color: #e0e0e0;
+}
+
+.dark-mode-toggle.dark:hover .toggle-track {
+  background-color: #444;
+}
+
+/* Focus styles for accessibility */
+.dark-mode-toggle:focus {
+  outline: none;
+}
+
+.dark-mode-toggle:focus .toggle-track {
+  box-shadow: 0 0 0 2px var(--color-primary);
+}
+
+/* Animation for the toggle */
+@keyframes toggleOn {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(28px); }
+  100% { transform: translateX(24px); }
+}
+
+@keyframes toggleOff {
+  0% { transform: translateX(24px); }
+  50% { transform: translateX(-4px); }
+  100% { transform: translateX(0); }
+}
+
+.dark-mode-toggle.dark .toggle-indicator {
+  animation: toggleOn 0.3s forwards;
+}
+
+.dark-mode-toggle:not(.dark) .toggle-indicator {
+  animation: toggleOff 0.3s forwards;
+}
